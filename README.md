@@ -13,8 +13,8 @@ Front End Development Project (HTML, CSS, JavaScript).
 Open `index.html` in a browser. No installation needed.
 
 ## Live demo
-https://YOUR-USERNAME.github.io/career-path/
+https://github.com/kanakraghuwanshi687-del/career-path
 
 ## Team
-- Kanak – <roll no>
-- <Teammate name> – <roll no>
+- Kanak Raghuwanshi – <roll no> 0863EC251012
+- Khushi Singh Chouhan – <roll no> 0863CP251006
