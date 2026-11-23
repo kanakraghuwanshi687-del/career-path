@@ -13,7 +13,7 @@ Front End Development Project (HTML, CSS, JavaScript).
 Open `index.html` in a browser. No installation needed.
 
 ## Live demo
-https://github.com/kanakraghuwanshi687-del/career-path
+https://kanakraghuwanshi687-del.github.io/career-path/
 
 ## Team
 - Kanak Raghuwanshi – <roll no> 0863EC251012
