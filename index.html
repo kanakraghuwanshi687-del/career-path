@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CareerPath – Find your roadmap</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="nav">
+    <a href="#" class="logo">🧭 CareerPath</a>
+    <nav>
+      <a href="#explore">Explore</a>
+      <a href="#about">About</a>
+      <button id="themeBtn" aria-label="Toggle dark mode">🌙</button>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>Pick a career. Get a step-by-step roadmap.</h1>
+    <p>Explore tech careers, see the skills you need, and track your progress.</p>
+    <a href="#explore" class="btn">Start exploring</a>
+  </section>
+
+  <main id="explore">
+    <div class="controls">
+      <input id="search" type="search" placeholder="Search careers or skills (e.g. Python, IoT)..." />
+      <div id="filters" class="filters"></div>
+    </div>
+    <p id="count" class="count"></p>
+    <div id="grid" class="grid"></div>
+  </main>
+
+  <section id="about" class="about">
+    <h2>About this project</h2>
+    <p>Built with HTML, CSS and JavaScript as a Front End Development project. Features: live search, category filters, roadmap popups, progress tracking (saved in your browser) and dark mode.</p>
+  </section>
+
+  <footer>Made by Kanak &amp; team · Front End Development Project 2026</footer>
+
+  <div id="modal" class="modal hidden" role="dialog" aria-modal="true">
+    <div class="modal-box">
+      <button id="closeBtn" class="close" aria-label="Close">✕</button>
+      <h2 id="mTitle"></h2>
+      <p id="mDesc"></p>
+      <div class="progress"><div id="bar"></div></div>
+      <p id="pText" class="count"></p>
+      <ol id="steps" class="steps"></ol>
+      <h3>Job roles</h3>
+      <div id="roles" class="tags"></div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
