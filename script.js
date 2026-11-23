@@ -70,7 +70,25 @@ const careers = [
       ["User research basics", "Interviews, personas"],
       ["Build 3 case studies", "Show your process"],
       ["Portfolio website", "Apply for internships"]],
-    roles: ["UI Designer", "UX Researcher", "Product Designer"] }
+    roles: ["UI Designer", "UX Researcher", "Product Designer"] },
+    { id: "vlsi", icon: "💾", title: "VLSI Design Engineer", cat: "Electronics",
+    desc: "Design the chips that power phones, computers and cars.",
+    steps: [
+      ["Digital electronics & Verilog", "Gates, flip-flops, FSMs"],
+      ["Learn HDL simulation", "ModelSim or Vivado"],
+      ["CMOS & VLSI design basics", "Layout, timing, power"],
+      ["Build an FPGA project", "ALU or traffic-light controller"],
+      ["Learn verification", "SystemVerilog, UVM basics"]],
+    roles: ["VLSI Engineer", "Verification Engineer", "FPGA Developer"] },
+  { id: "robo", icon: "🦾", title: "Robotics Engineer", cat: "Electronics",
+    desc: "Build machines that sense, think and move.",
+    steps: [
+      ["Maths, C++ and Python basics", "Linear algebra, programming"],
+      ["Sensors and actuators", "Arduino, motors, ultrasonic"],
+      ["Learn ROS", "Robot Operating System"],
+      ["Control systems & computer vision", "PID control, OpenCV"],
+      ["Build a robot", "Line follower or obstacle avoider"]],
+    roles: ["Robotics Engineer", "Automation Engineer", "Controls Engineer"] }
 ];
 
 // ===== STATE =====
