@@ -52,5 +52,49 @@
   </div>
 
   <script src="script.js"></script>
+ <!-- Welcome screen -->
+<div id="cpWelcome">
+  <div class="cp-box">
+    <div class="cp-icon">🧭</div>
+    <h1>Welcome to CareerPath</h1>
+    <p>Explore step-by-step roadmaps and find the career that fits you.</p>
+    <button id="cpWelcomeBtn">Get Started</button>
+  </div>
+</div>
+
+<style>
+  #cpWelcome {
+    position: fixed; inset: 0; z-index: 9999;
+    display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, #4f46e5, #7c3aed);
+    transition: opacity .6s ease, visibility .6s ease;
+  }
+  #cpWelcome.cp-hide { opacity: 0; visibility: hidden; }
+  #cpWelcome .cp-box {
+    text-align: center; color: #fff; padding: 24px; max-width: 480px;
+    animation: cpRise .8s ease;
+  }
+  #cpWelcome .cp-icon { font-size: 64px; margin-bottom: 12px; }
+  #cpWelcome h1 { font-size: 2.2rem; margin: 0 0 10px; }
+  #cpWelcome p { font-size: 1.1rem; opacity: .9; margin: 0 0 24px; }
+  #cpWelcome button {
+    background: #fff; color: #4f46e5; border: 0; cursor: pointer;
+    padding: 12px 32px; font-size: 1rem; font-weight: 700; border-radius: 999px;
+  }
+  #cpWelcome button:hover { transform: scale(1.05); }
+  @keyframes cpRise {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+</style>
+
+<script>
+  (function () {
+    var w = document.getElementById("cpWelcome");
+    function closeWelcome() { w.classList.add("cp-hide"); }
+    document.getElementById("cpWelcomeBtn").addEventListener("click", closeWelcome);
+    setTimeout(closeWelcome, 4000);
+  })();
+</script> 
 </body>
 </html>
