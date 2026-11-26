@@ -190,6 +190,67 @@
   </div>
 
   <script src="script.js"></script> 
+    <!-- ===== Skills + Requirements on every career card ===== -->
+<style>
+  .cps-wrap { margin-top: 12px; text-align: left; }
+  .cps-wrap b { display: block; font-size: .78rem; color: #4f46e5; margin: 8px 0 4px; text-transform: uppercase; letter-spacing: .04em; }
+  .cps-tags span { display: inline-block; margin: 0 5px 5px 0; padding: 3px 10px; border-radius: 999px; background: #4f46e5; color: #fff; font-size: .75rem; }
+  .cps-req { margin: 0; padding-left: 16px; font-size: .82rem; line-height: 1.55; opacity: .85; }
+</style>
+
+<script>
+  (function () {
+    var info = {
+      "web developer": { s: ["HTML", "CSS", "JavaScript", "React", "Git"], r: ["12th any stream or CS/IT degree or diploma", "3 to 5 projects on GitHub", "Problem solving and basic English"] },
+      "app developer": { s: ["Kotlin / Java", "Flutter", "Swift", "UI basics", "APIs"], r: ["CS/IT background helps", "1 or 2 published or demo apps", "Knowledge of mobile UI guidelines"] },
+      "data scientist": { s: ["Python", "SQL", "Statistics", "Pandas", "Visualisation"], r: ["Maths and statistics basics", "Degree in CS, IT, maths or similar", "Projects with real datasets"] },
+      "ai / ml": { s: ["Python", "Machine Learning", "Deep Learning", "TensorFlow / PyTorch", "Maths"], r: ["Linear algebra, probability and calculus", "Strong Python programming", "A few model-building projects"] },
+      "embedded systems": { s: ["C / C++", "Microcontrollers", "RTOS", "Circuits", "Debugging"], r: ["Electronics, ECE or CS background", "Hands-on Arduino or STM32 projects", "Understanding of sensors and protocols"] },
+      "iot engineer": { s: ["Sensors", "Arduino / ESP32", "MQTT", "Networking", "Cloud basics"], r: ["Electronics and programming basics", "A working IoT project", "Knowledge of Wi-Fi and Bluetooth"] },
+      "vlsi": { s: ["Verilog", "Digital Design", "CMOS", "FPGA", "SystemVerilog"], r: ["Electronics or ECE degree", "Strong digital electronics", "An FPGA or HDL project"] },
+      "robotics": { s: ["C++ / Python", "ROS", "Sensors", "Control Systems", "OpenCV"], r: ["Maths, programming and electronics basics", "A robot or automation project", "Mechanical or electronics background helps"] },
+      "security": { s: ["Networking", "Linux", "Ethical Hacking", "Cryptography", "Python"], r: ["Networking and Linux basics", "Practice only in legal labs", "Certifications such as CEH or Security+ help"] },
+      "cyber": { s: ["Networking", "Linux", "Ethical Hacking", "Cryptography", "Python"], r: ["Networking and Linux basics", "Practice only in legal labs", "Certifications such as CEH or Security+ help"] },
+      "ui": { s: ["Figma", "User Research", "Prototyping", "Typography", "Colour Theory"], r: ["Creativity and an eye for layout", "Portfolio of 3 to 5 case studies", "Basic knowledge of user behaviour"] },
+      "ux": { s: ["Figma", "User Research", "Prototyping", "Typography", "Colour Theory"], r: ["Creativity and an eye for layout", "Portfolio of 3 to 5 case studies", "Basic knowledge of user behaviour"] }
+    };
+    var fallback = { s: ["Core skills", "Problem solving", "Communication", "Teamwork"], r: ["Relevant degree or diploma", "Projects or internships", "Regular practice"] };
+
+    function findGrid() {
+      var all = document.querySelectorAll("body *");
+      for (var i = 0; i < all.length; i++) {
+        if (all[i].children.length === 0 && /careers? found/i.test(all[i].textContent)) return all[i].nextElementSibling;
+      }
+      return null;
+    }
+
+    function pick(text) {
+      var keys = Object.keys(info);
+      for (var i = 0; i < keys.length; i++) if (text.indexOf(keys[i]) > -1) return info[keys[i]];
+      return fallback;
+    }
+
+    function decorate(grid) {
+      Array.prototype.forEach.call(grid.children, function (card) {
+        if (card.querySelector(".cps-wrap")) return;
+        var d = pick(card.textContent.toLowerCase());
+        var w = document.createElement("div");
+        w.className = "cps-wrap";
+        w.innerHTML = "<b>Skills</b><div class='cps-tags'>" + d.s.map(function (x) { return "<span>" + x + "</span>"; }).join("") + "</div>" +
+          "<b>Requirements</b><ul class='cps-req'>" + d.r.map(function (x) { return "<li>" + x + "</li>"; }).join("") + "</ul>";
+        card.appendChild(w);
+      });
+    }
+
+    function start() {
+      var grid = findGrid();
+      if (!grid) { setTimeout(start, 500); return; }
+      decorate(grid);
+      new MutationObserver(function () { decorate(grid); }).observe(grid, { childList: true });
+    }
+    start();
+  })();
+</script>
     <!-- ===== Extra info inside the career popup ===== -->
 <style>
   #cpmExtra { margin-top: 18px; text-align: left; }
