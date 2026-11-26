@@ -273,6 +273,76 @@
     document.getElementById("cpWelcomeBtn").addEventListener("click", closeWelcome);
     setTimeout(closeWelcome, 4000);
   })();
-</script> 
+</script>
+    <!-- ===== Photos on career cards + How it works ===== -->
+<style>
+  .cpc-photo { width: calc(100% + 0px); height: 120px; object-fit: cover; border-radius: 12px; display: block; margin-bottom: 12px; }
+  #cpHow { max-width: 1100px; margin: 40px auto; padding: 0 16px; }
+  #cpHow h2 { margin: 0 0 16px; border-left: 5px solid #4f46e5; padding-left: 10px; }
+  .cph-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+  .cph-step { background: rgba(127,127,127,.1); border-radius: 14px; padding: 16px; transition: transform .2s; }
+  .cph-step:hover { transform: translateY(-4px); }
+  .cph-num { display: inline-flex; width: 34px; height: 34px; border-radius: 50%; background: #4f46e5; color: #fff; align-items: center; justify-content: center; font-weight: 700; margin-bottom: 8px; }
+  .cph-step p { margin: 6px 0 0; opacity: .85; font-size: .95rem; }
+</style>
+
+<script>
+  (function () {
+    // Optional: put a photo file name next to a career word to choose its picture
+    var pick = { /* "web": "pexels-xxxx.jpg", "robot": "pexels-yyyy.jpg" */ };
+    var pics = [];
+
+    function findGrid() {
+      var all = document.querySelectorAll("body *"), cnt = null;
+      for (var i = 0; i < all.length; i++) {
+        if (all[i].children.length === 0 && /careers? found/i.test(all[i].textContent)) { cnt = all[i]; break; }
+      }
+      return cnt ? cnt.nextElementSibling : null;
+    }
+
+    function decorate(grid) {
+      Array.prototype.forEach.call(grid.children, function (card, i) {
+        if (card.querySelector(".cpc-photo") || !pics.length) return;
+        var text = card.textContent.toLowerCase(), src = null;
+        Object.keys(pick).forEach(function (k) { if (text.indexOf(k) > -1) src = encodeURI(pick[k]); });
+        var img = document.createElement("img");
+        img.className = "cpc-photo";
+        img.alt = "Career photo";
+        img.loading = "lazy";
+        img.src = src || pics[i % pics.length];
+        img.onerror = function () { img.remove(); };
+        card.insertBefore(img, card.firstChild);
+      });
+    }
+
+    function addHow(grid) {
+      if (document.getElementById("cpHow")) return;
+      var s = document.createElement("section");
+      s.id = "cpHow";
+      s.innerHTML = '<h2>How CareerPath Works</h2><div class="cph-grid">' +
+        '<div class="cph-step"><span class="cph-num">1</span><b>Browse or search</b><p>Pick a category or type a skill or job role in the search bar.</p></div>' +
+        '<div class="cph-step"><span class="cph-num">2</span><b>Open a roadmap</b><p>Click any career card to see its step-by-step learning path.</p></div>' +
+        '<div class="cph-step"><span class="cph-num">3</span><b>Tick your progress</b><p>Mark completed steps. The percentage on the card updates.</p></div>' +
+        '<div class="cph-step"><span class="cph-num">4</span><b>Come back anytime</b><p>Your progress is saved in your browser, so you can continue later.</p></div></div>';
+      grid.parentNode.insertBefore(s, grid.nextSibling);
+    }
+
+    function start() {
+      var grid = findGrid();
+      if (!grid) return;
+      addHow(grid);
+      decorate(grid);
+      new MutationObserver(function () { decorate(grid); }).observe(grid, { childList: true });
+    }
+
+    fetch("https://api.github.com/repos/kanakraghuwanshi687-del/career-path/contents/")
+      .then(function (r) { return r.json(); })
+      .then(function (items) {
+        pics = items.filter(function (f) { return /\.(jpe?g|png|webp)$/i.test(f.name); }).map(function (f) { return encodeURI(f.name); });
+        start();
+      })
+      .catch(start);
+  })();
+</script>
 </body>
 </html>
