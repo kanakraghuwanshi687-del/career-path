@@ -189,7 +189,50 @@
     </div>
   </div>
 
-  <script src="script.js"></script>
+  <script src="script.js"></script> 
+    <!-- ===== Extra info inside the career popup ===== -->
+<style>
+  #cpmExtra { margin-top: 18px; text-align: left; }
+  #cpmExtra .cpm-box { background: rgba(127,127,127,.1); border-radius: 12px; padding: 12px 16px; margin-top: 10px; }
+  #cpmExtra h4 { margin: 0 0 6px; color: #4f46e5; }
+  #cpmExtra ul { margin: 0; padding-left: 18px; line-height: 1.7; font-size: .92rem; }
+  #cpmExtra p { margin: 0; font-size: .92rem; line-height: 1.6; }
+</style>
+
+<script>
+  (function () {
+    var data = [
+      { k: ["web", "app", "software", "full"], req: ["12th with any stream, or a CS/IT degree or diploma", "HTML, CSS, JavaScript and one framework", "3 to 5 projects on GitHub", "Basic English and problem solving"], res: ["freeCodeCamp", "The Odin Project", "MDN Web Docs", "NPTEL programming courses"] },
+      { k: ["data", "ai", "ml", "machine"], req: ["Maths and statistics basics", "Python and SQL", "Projects with real datasets", "A degree in CS, IT or a related field is helpful"], res: ["Kaggle Learn", "NPTEL data science courses", "Google's Machine Learning Crash Course", "freeCodeCamp Python"] },
+      { k: ["embedded", "iot", "vlsi", "robot", "electronic"], req: ["Electronics or ECE/CS background", "C/C++ and microcontroller basics", "Hands-on projects (Arduino, Raspberry Pi, FPGA)", "Knowledge of circuits and sensors"], res: ["NPTEL electronics courses", "Arduino and Raspberry Pi docs", "All About Circuits", "YouTube channels on embedded systems"] },
+      { k: ["security", "cyber", "hack"], req: ["Networking and Linux basics", "Programming basics (Python)", "Practice in legal labs only", "Certifications such as CEH or Security+ help"], res: ["TryHackMe", "OWASP resources", "Cisco Networking Academy", "NPTEL cyber security courses"] },
+      { k: ["design", "ui", "ux"], req: ["Creativity and an eye for layout", "Figma or similar tools", "A portfolio of 3 to 5 case studies", "Basic user research skills"], res: ["Figma's free tutorials", "Google UX Design resources", "Nielsen Norman Group articles", "Behance for inspiration"] }
+    ];
+    var fallback = { req: ["Relevant degree or diploma", "Core skills listed in the roadmap", "Projects or internships", "Regular practice"], res: ["NPTEL", "YouTube tutorials", "freeCodeCamp", "Official documentation"] };
+
+    function build(modal) {
+      var old = document.getElementById("cpmExtra");
+      if (old) old.remove();
+      var head = modal.querySelector("h2");
+      if (!head) return;
+      var t = head.textContent.toLowerCase(), d = fallback;
+      data.forEach(function (x) { if (d === fallback && x.k.some(function (w) { return t.indexOf(w) > -1; })) d = x; });
+      var div = document.createElement("div");
+      div.id = "cpmExtra";
+      div.innerHTML =
+        '<div class="cpm-box"><h4>Requirements</h4><ul>' + d.req.map(function (r) { return "<li>" + r + "</li>"; }).join("") + "</ul></div>" +
+        '<div class="cpm-box"><h4>Free resources</h4><ul>' + d.res.map(function (r) { return "<li>" + r + "</li>"; }).join("") + "</ul></div>" +
+        '<div class="cpm-box"><h4>Salary and demand</h4><p>Pay depends on city, company and experience, so check current figures on job portals such as Naukri, LinkedIn or Glassdoor before deciding.</p></div>';
+      modal.querySelector(".modal-box").appendChild(div);
+    }
+
+    var modal = document.getElementById("modal");
+    if (!modal) return;
+    new MutationObserver(function () {
+      if (!modal.classList.contains("hidden")) setTimeout(function () { build(modal); }, 50);
+    }).observe(modal, { attributes: true, attributeFilter: ["class"] });
+  })();
+</script>
     <!-- ===== Photo mosaic collage for the purple hero ===== -->
 <style>
   /* hide the old 3-photo collage images, show only the new mosaic */
