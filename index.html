@@ -344,5 +344,62 @@
       .catch(start);
   })();
 </script>
+    <!-- ===== Details for the 5 feature cards ===== -->
+<style>
+  .cp2-feat div { cursor: pointer; transition: transform .2s, background .2s; }
+  .cp2-feat div:hover { transform: translateY(-4px); }
+  .cp2-feat div.cpf-on { background: #5b21b6; color: #fff; }
+  .cp2-feat div.cpf-on small { color: #ddd6fe; }
+  #cpfPanel { margin: 16px 16px 0; background: linear-gradient(135deg, #ede9fe, #ddd6fe); color: #2e1065; border-radius: 18px; padding: 18px 24px; }
+  #cpfPanel h3 { margin: 0 0 10px; color: #5b21b6; }
+  #cpfPanel .cpf-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+  #cpfPanel b { display: block; margin-bottom: 4px; }
+  #cpfPanel ul { margin: 0; padding-left: 18px; line-height: 1.7; }
+  #cpfPanel p { margin: 0; line-height: 1.6; }
+</style>
+
+<script>
+  (function () {
+    var bar = document.querySelector(".cp2-feat");
+    if (!bar) return;
+    var info = [
+      { t: "📝 Career Assessment",
+        what: "Helps you understand your interests, strengths and personality so you can shortlist suitable careers.",
+        req: ["No sign-up or fees", "About 10 minutes of time", "Honest answers, not what others expect", "Any phone or laptop browser"],
+        tips: "Compare your result with the roadmaps on this site, and talk to a teacher or mentor before deciding." },
+      { t: "🗺️ Career Roadmap",
+        what: "A step-by-step learning path for each career, from basics to job-ready skills.",
+        req: ["Basic interest in the chosen field", "Willingness to follow steps in order", "Regular study time each week", "Projects to practise what you learn"],
+        tips: "Open any career card to see its steps. Tick each step as you finish it." },
+      { t: "📚 Skills & Courses",
+        what: "Lists the skills each career needs and where to learn them.",
+        req: ["Internet connection for online courses", "Basic computer skills", "Free options: NPTEL, YouTube, freeCodeCamp", "Certificates are useful but projects matter more"],
+        tips: "Start with free courses and move to paid ones only when you need to." },
+      { t: "💼 Jobs & Roles",
+        what: "Shows the job titles and work options available in each sector.",
+        req: ["Relevant degree or diploma (varies by field)", "Core skills for the role", "A resume and 2 or 3 projects", "Internships for practical experience"],
+        tips: "Check each company's own requirements, since they change by employer and city." },
+      { t: "📈 Progress Tracker",
+        what: "Tracks the steps you complete in each roadmap and shows a percentage.",
+        req: ["Use the same browser and device", "Do not clear browser data", "Tick steps honestly as you complete them"],
+        tips: "Progress is saved in your browser (localStorage), so it stays when you return." }
+    ];
+    var panel = document.createElement("div");
+    panel.id = "cpfPanel";
+    bar.parentNode.insertBefore(panel, bar.nextSibling);
+    function show(i) {
+      var d = info[i];
+      panel.innerHTML = "<h3>" + d.t + "</h3><div class='cpf-cols'>" +
+        "<div><b>What it is</b><p>" + d.what + "</p></div>" +
+        "<div><b>Requirements</b><ul>" + d.req.map(function (r) { return "<li>" + r + "</li>"; }).join("") + "</ul></div>" +
+        "<div><b>Useful info</b><p>" + d.tips + "</p></div></div>";
+      Array.prototype.forEach.call(bar.children, function (c, k) { c.classList.toggle("cpf-on", k === i); });
+    }
+    Array.prototype.forEach.call(bar.children, function (c, i) {
+      if (info[i]) c.onclick = function () { show(i); };
+    });
+    show(0);
+  })();
+</script>
 </body>
 </html>
