@@ -190,6 +190,46 @@
   </div>
 
   <script src="script.js"></script>
+    <!-- ===== Photo mosaic collage for the purple hero ===== -->
+<style>
+  /* hide the old 3-photo collage images, show only the new mosaic */
+  .cp2-collage img:not(.cp2-m) { display: none; }
+  .cp2-collage {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 120px; gap: 10px;
+  }
+  .cp2-collage img.cp2-m {
+    width: 100%; height: 100%; object-fit: cover;
+    border-radius: 16px; border: 3px solid #fff;
+    box-shadow: 0 8px 20px rgba(76,29,149,.35);
+    transition: transform .25s;
+  }
+  .cp2-collage img.cp2-m:hover { transform: scale(1.04); z-index: 2; }
+  .cp2-collage img.cp2-m:nth-of-type(1) { grid-column: 1 / 3; grid-row: 1 / 3; }
+  @media (max-width: 800px) { .cp2-collage { grid-auto-rows: 90px; } }
+</style>
+
+<script>
+  (function () {
+    var collage = document.getElementById("cp2Collage");
+    if (!collage) return;
+    fetch("https://api.github.com/repos/kanakraghuwanshi687-del/career-path/contents/")
+      .then(function (r) { return r.json(); })
+      .then(function (items) {
+        items.filter(function (f) { return /\.(jpe?g|png|webp)$/i.test(f.name); })
+          .slice(0, 6)
+          .forEach(function (f) {
+            var img = document.createElement("img");
+            img.className = "cp2-m";
+            img.src = encodeURI(f.name);
+            img.alt = "Legal profession";
+            img.onerror = function () { img.remove(); };
+            collage.appendChild(img);
+          });
+      })
+      .catch(function () {});
+  })();
+</script>
  <!-- Welcome screen -->
 <div id="cpWelcome">
   <div class="cp-box">
