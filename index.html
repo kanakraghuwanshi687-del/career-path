@@ -7,6 +7,106 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <!-- ===== Purple hero + photo cards ===== -->
+<section id="cp2">
+  <div class="cp2-hero">
+    <div class="cp2-left">
+      <h1>Build Your Future<br>With the Right <span>Career Path</span></h1>
+      <p>Discover your strengths, explore career options and follow a step-by-step roadmap to your dream career.</p>
+      <div class="cp2-btns">
+        <a href="#cp2Paths" class="cp2-b1">Explore Careers →</a>
+        <a href="#cpGallery" class="cp2-b2">View Gallery</a>
+      </div>
+    </div>
+    <div class="cp2-collage" id="cp2Collage"></div>
+  </div>
+
+  <div class="cp2-feat">
+    <div><b>📝 Career Assessment</b><small>Discover your strengths and interests.</small></div>
+    <div><b>🗺️ Career Roadmap</b><small>Step-by-step learning paths.</small></div>
+    <div><b>📚 Skills &amp; Courses</b><small>Recommended courses and skills.</small></div>
+    <div><b>💼 Jobs &amp; Roles</b><small>Explore job roles in each sector.</small></div>
+    <div><b>📈 Progress Tracker</b><small>Track your career growth.</small></div>
+  </div>
+
+  <h2 id="cp2Paths">Popular Career Paths</h2>
+  <div class="cp2-cards" id="cp2Cards"></div>
+
+  <div class="cp2-journey">
+    <h3>⭐ Your Career Journey Made Simple</h3>
+    <ul>
+      <li>✅ <b>Know Yourself</b> – understand your interests</li>
+      <li>✅ <b>Explore Options</b> – find the best fit</li>
+      <li>✅ <b>Learn &amp; Upskill</b> – build the right skills</li>
+      <li>✅ <b>Grow Professionally</b> – achieve your goals</li>
+    </ul>
+  </div>
+  <div class="cp2-banner">🏆 Your Dream Career is Just a Step Away!</div>
+</section>
+
+<style>
+  #cp2 { max-width: 1150px; margin: 0 auto; padding: 16px; font-family: inherit; }
+  .cp2-hero { display: grid; grid-template-columns: 1.1fr 1fr; gap: 24px; align-items: center;
+    background: linear-gradient(135deg, #ede9fe, #c4b5fd 55%, #8b5cf6); border-radius: 24px; padding: 40px; color: #2e1065; }
+  .cp2-left h1 { font-size: 2.6rem; line-height: 1.15; margin: 0 0 14px; }
+  .cp2-left h1 span { color: #5b21b6; font-style: italic; }
+  .cp2-left p { font-size: 1.1rem; margin: 0 0 22px; }
+  .cp2-btns a { display: inline-block; padding: 12px 26px; border-radius: 999px; font-weight: 700; text-decoration: none; margin: 0 10px 8px 0; }
+  .cp2-b1 { background: #5b21b6; color: #fff; }
+  .cp2-b2 { border: 2px solid #5b21b6; color: #5b21b6; }
+  .cp2-collage { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .cp2-collage img { width: 100%; height: 150px; object-fit: cover; border-radius: 16px; border: 3px solid #fff; box-shadow: 0 8px 20px rgba(76,29,149,.3); }
+  .cp2-collage img:first-child { grid-column: 1 / -1; height: 190px; }
+  .cp2-feat { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin: -24px 16px 0; position: relative; }
+  .cp2-feat div { background: #fff; color: #2e1065; border-radius: 16px; padding: 14px; box-shadow: 0 6px 18px rgba(76,29,149,.15); }
+  .cp2-feat small { display: block; margin-top: 4px; color: #6b7280; }
+  #cp2 h2 { margin: 36px 0 14px; color: #5b21b6; }
+  .cp2-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 14px; }
+  .cp2-card { position: relative; height: 190px; border-radius: 18px; overflow: hidden; background: linear-gradient(135deg, #7c3aed, #4c1d95); box-shadow: 0 6px 16px rgba(76,29,149,.25); transition: transform .2s; }
+  .cp2-card:hover { transform: translateY(-5px); }
+  .cp2-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .cp2-card::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(76,29,149,.9), rgba(76,29,149,.05) 60%); }
+  .cp2-tag { position: absolute; left: 12px; bottom: 12px; z-index: 2; color: #fff; font-weight: 700; }
+  .cp2-chip { position: absolute; top: 10px; right: 10px; z-index: 2; background: #fff; color: #5b21b6; font-size: .75rem; font-weight: 700; padding: 3px 10px; border-radius: 999px; }
+  .cp2-journey { margin-top: 30px; background: linear-gradient(135deg, #ede9fe, #ddd6fe); color: #2e1065; border-radius: 20px; padding: 20px 26px; }
+  .cp2-journey ul { list-style: none; padding: 0; margin: 10px 0 0; line-height: 2; }
+  .cp2-banner { margin-top: 20px; background: #3b0f7a; color: #fff; text-align: center; font-weight: 700; font-size: 1.2rem; padding: 18px; border-radius: 16px; }
+  @media (max-width: 800px) { .cp2-hero { grid-template-columns: 1fr; padding: 24px; } .cp2-left h1 { font-size: 2rem; } }
+</style>
+
+<script>
+  (function () {
+    // Edit these two lists to change the card names and small tags
+    var labels = ["Advocate", "Judge", "Corporate Law", "Legal Advisor", "Law Library", "Courtroom"];
+    var chips  = ["Litigation", "Judiciary", "Business", "Consulting", "Research", "Practice"];
+    var cards = document.getElementById("cp2Cards"), collage = document.getElementById("cp2Collage");
+    labels.forEach(function (l, i) {
+      var c = document.createElement("div");
+      c.className = "cp2-card";
+      c.innerHTML = '<span class="cp2-chip">' + chips[i] + '</span><span class="cp2-tag">' + l + '</span>';
+      cards.appendChild(c);
+    });
+    fetch("https://api.github.com/repos/kanakraghuwanshi687-del/career-path/contents/")
+      .then(function (r) { return r.json(); })
+      .then(function (items) {
+        var pics = items.filter(function (f) { return /\.(jpe?g|png|webp)$/i.test(f.name); }).map(function (f) { return encodeURI(f.name); });
+        Array.prototype.forEach.call(cards.children, function (c, i) {
+          if (!pics[i]) return;
+          var img = document.createElement("img");
+          img.src = pics[i]; img.alt = labels[i]; img.loading = "lazy";
+          img.onerror = function () { img.remove(); };
+          c.insertBefore(img, c.firstChild);
+        });
+        pics.slice(6, 9).concat(pics.slice(0, 3)).slice(0, 3).forEach(function (p) {
+          var img = document.createElement("img");
+          img.src = p; img.alt = "Legal profession";
+          img.onerror = function () { img.remove(); };
+          collage.appendChild(img);
+        });
+      })
+      .catch(function () {});
+  })();
+</script>
   <header class="nav">
     <a href="#" class="logo">🧭 CareerPath</a>
     <nav>
