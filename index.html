@@ -738,5 +738,93 @@
     show(0);
   })();
 </script>
+    <!-- ===== Standalone registration form (opens from the big button) ===== -->
+<style>
+  #rfOverlay { position: fixed; inset: 0; z-index: 2147483000; background: rgba(30,10,60,.75); display: none; align-items: center; justify-content: center; padding: 16px; }
+  #rfOverlay.rf-open { display: flex; }
+  #rfBox { position: relative; background: #fff; color: #1f1147; width: 100%; max-width: 480px; max-height: 92vh; overflow-y: auto; border-radius: 20px; padding: 26px 24px; box-sizing: border-box; }
+  #rfBox h2 { margin: 0 0 14px; color: #5b21b6; }
+  #rfBox label { display: block; font-weight: 600; font-size: .9rem; margin-bottom: 10px; }
+  #rfBox input[type=text], #rfBox input[type=email], #rfBox input[type=tel], #rfBox select { display: block; width: 100%; box-sizing: border-box; margin-top: 5px; padding: 10px 12px; border: 2px solid #ddd6fe; border-radius: 10px; font: inherit; background: #fff; color: #1f1147; }
+  #rfBox .rf-bad { border-color: #dc2626 !important; }
+  #rfBox .rf-err { display: block; color: #dc2626; font-size: .8rem; font-weight: 500; min-height: 1em; }
+  #rfBox .rf-btn { width: 100%; border: 0; cursor: pointer; margin-top: 8px; padding: 13px; border-radius: 12px; background: #5b21b6; color: #fff; font-weight: 700; font-size: 1rem; }
+  #rfX { position: absolute; top: 12px; right: 14px; border: 0; background: #ede9fe; color: #5b21b6; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; }
+</style>
+
+<script>
+  (function () {
+    var jobs = ["Web Developer","App Developer","Data Scientist","AI / ML Engineer","Embedded Systems Engineer","IoT Engineer","VLSI Design Engineer","Robotics Engineer","Cyber Security Analyst","UI/UX Designer","Advocate / Law"];
+    var quals = ["12th Pass","Diploma","B.Tech / B.E.","BCA / B.Sc.","LLB / Law","Master's Degree","Other"];
+    function opts(a) { return '<option value="">-- Select --</option>' + a.map(function (x) { return "<option>" + x + "</option>"; }).join(""); }
+
+    var o = document.createElement("div");
+    o.id = "rfOverlay";
+    o.innerHTML =
+      '<div id="rfBox"><button type="button" id="rfX">✕</button>' +
+      '<div id="rfFormWrap"><h2>Registration &amp; Job Application</h2><form id="rfForm" novalidate>' +
+      '<label>Full name *<input type="text" id="rfName"><span class="rf-err"></span></label>' +
+      '<label>Email *<input type="email" id="rfEmail"><span class="rf-err"></span></label>' +
+      '<label>Mobile number *<input type="tel" id="rfPhone" maxlength="10"><span class="rf-err"></span></label>' +
+      '<label>Qualification *<select id="rfQual">' + opts(quals) + '</select><span class="rf-err"></span></label>' +
+      '<label>Career applying for *<select id="rfJob">' + opts(jobs) + '</select><span class="rf-err"></span></label>' +
+      '<label><input type="checkbox" id="rfOk"> I confirm the details are correct *<span class="rf-err"></span></label>' +
+      '<button type="submit" class="rf-btn">Submit Application</button></form></div>' +
+      '<div id="rfDone" style="display:none;text-align:center"><div style="font-size:3rem">✅</div><h2>Application Submitted!</h2><p id="rfMsg"></p><button type="button" class="rf-btn" id="rfClose">Close</button></div></div>';
+    document.body.appendChild(o);
+
+    var $ = function (id) { return document.getElementById(id); };
+    var rules = {
+      rfName: function (v) { return /^[A-Za-z][A-Za-z .'-]{2,}$/.test(v) ? "" : "Enter your name (letters only, min 3)."; },
+      rfEmail: function (v) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v) ? "" : "Enter a valid email."; },
+      rfPhone: function (v) { return /^[6-9]\d{9}$/.test(v) ? "" : "Enter a valid 10-digit mobile number."; },
+      rfQual: function (v) { return v ? "" : "Select your qualification."; },
+      rfJob: function (v) { return v ? "" : "Select a career."; }
+    };
+    function check(id) {
+      var el = $(id), msg = rules[id](el.value.trim());
+      el.parentNode.querySelector(".rf-err").textContent = msg;
+      el.classList.toggle("rf-bad", !!msg);
+      return !msg;
+    }
+    Object.keys(rules).forEach(function (id) { $(id).addEventListener("blur", function () { check(id); }); });
+    $("rfPhone").addEventListener("input", function () { this.value = this.value.replace(/\D/g, ""); });
+
+    function openForm() { $("rfFormWrap").style.display = "block"; $("rfDone").style.display = "none"; o.classList.add("rf-open"); }
+    function closeForm() { o.classList.remove("rf-open"); }
+    window.openRegistration = openForm;
+
+    $("rfX").addEventListener("click", closeForm);
+    $("rfClose").addEventListener("click", closeForm);
+    o.addEventListener("click", function (e) { if (e.target === o) closeForm(); });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeForm(); });
+
+    // Opens from the big button, the floating Apply Now button, or anything with data-apply
+    document.addEventListener("click", function (e) {
+      var t = e.target.closest ? e.target.closest(".cpr-btn, [data-apply], #cpApplyBtn, #cpmApplyBtn") : null;
+      if (t) { e.preventDefault(); e.stopPropagation(); openForm(); }
+    }, true);
+
+    $("rfForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      var ok = true;
+      Object.keys(rules).forEach(function (id) { if (!check(id)) ok = false; });
+      var c = $("rfOk");
+      c.parentNode.querySelector(".rf-err").textContent = c.checked ? "" : "Please confirm.";
+      if (!c.checked) ok = false;
+      if (!ok) return;
+      var entry = { name: $("rfName").value.trim(), email: $("rfEmail").value.trim(), phone: $("rfPhone").value, qualification: $("rfQual").value, job: $("rfJob").value, date: new Date().toLocaleString() };
+      try {
+        var list = JSON.parse(localStorage.getItem("cpApplications") || "[]");
+        list.push(entry);
+        localStorage.setItem("cpApplications", JSON.stringify(list));
+      } catch (x) {}
+      $("rfMsg").textContent = "Thank you, " + entry.name + ". Your application for " + entry.job + " is recorded.";
+      $("rfFormWrap").style.display = "none";
+      $("rfDone").style.display = "block";
+      this.reset();
+    });
+  })();
+</script>
 </body>
 </html>
