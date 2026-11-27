@@ -276,109 +276,94 @@
     setTimeout(place, 800);
   })();
 </script>
-    <!-- ===== Apply Now button + registration form with validation ===== -->
+ <!-- ===== Apply Now button + registration form (complete) ===== -->
 <button id="cpApplyBtn" type="button">📝 Apply Now</button>
 
-<div id="cpApply" aria-hidden="true">
-  <div class="cpa-box" role="dialog" aria-modal="true" aria-labelledby="cpaTitle">
-    <button type="button" class="cpa-close" id="cpaClose" aria-label="Close">✕</button>
-    <div id="cpaFormWrap">
-      <h2 id="cpaTitle">Registration &amp; Job Application</h2>
-      <p class="cpa-sub">Fill in your details to apply. Fields marked * are required.</p>
-      <form id="cpaForm" novalidate>
-        <label>Full name *
-          <input type="text" id="cpaName" placeholder="e.g. Rahul Sharma">
-          <small class="cpa-err" id="cpaNameE"></small>
-        </label>
-        <label>Email *
-          <input type="email" id="cpaEmail" placeholder="name@example.com">
-          <small class="cpa-err" id="cpaEmailE"></small>
-        </label>
-        <label>Mobile number *
-          <input type="tel" id="cpaPhone" placeholder="10-digit number" maxlength="10">
-          <small class="cpa-err" id="cpaPhoneE"></small>
-        </label>
-        <label>Highest qualification *
-          <select id="cpaQual">
-            <option value="">-- Select --</option>
-            <option>12th Pass</option>
-            <option>Diploma</option>
-            <option>B.Tech / B.E.</option>
-            <option>BCA / B.Sc.</option>
-            <option>LLB / Law</option>
-            <option>Master's Degree</option>
-            <option>Other</option>
-          </select>
-          <small class="cpa-err" id="cpaQualE"></small>
-        </label>
-        <label>Career / job applying for *
-          <select id="cpaJob">
-            <option value="">-- Select --</option>
-            <option>Web Developer</option>
-            <option>App Developer</option>
-            <option>Data Scientist</option>
-            <option>AI / ML Engineer</option>
-            <option>Embedded Systems Engineer</option>
-            <option>IoT Engineer</option>
-            <option>VLSI Design Engineer</option>
-            <option>Robotics Engineer</option>
-            <option>Cyber Security Analyst</option>
-            <option>UI/UX Designer</option>
-            <option>Advocate / Law</option>
-          </select>
-          <small class="cpa-err" id="cpaJobE"></small>
-        </label>
-        <label>Resume / portfolio link (optional)
-          <input type="url" id="cpaLink" placeholder="https://...">
-          <small class="cpa-err" id="cpaLinkE"></small>
-        </label>
-        <label>Why are you interested? (optional, max 300 characters)
-          <textarea id="cpaMsg" rows="3" maxlength="300"></textarea>
-          <small class="cpa-err" id="cpaMsgE"></small>
-        </label>
-        <label class="cpa-check">
-          <input type="checkbox" id="cpaOk"> I confirm that the details above are correct *
-        </label>
-        <small class="cpa-err" id="cpaOkE"></small>
-        <button type="submit" class="cpa-submit">Submit Application</button>
-      </form>
-    </div>
-    <div id="cpaDone" style="display:none">
-      <div class="cpa-tick">✅</div>
-      <h2>Application Submitted!</h2>
-      <p id="cpaDoneMsg"></p>
-      <button type="button" class="cpa-submit" id="cpaDoneBtn">Close</button>
-    </div>
-  </div>
-</div>
-
 <style>
-  #cpApplyBtn { position: fixed; right: 18px; bottom: 18px; z-index: 9000; border: 0; cursor: pointer;
-    background: linear-gradient(135deg, #5b21b6, #7c3aed); color: #fff; font-weight: 700; font-size: 1rem;
-    padding: 14px 22px; border-radius: 999px; box-shadow: 0 8px 20px rgba(76,29,149,.45); transition: transform .2s; }
-  #cpApplyBtn:hover { transform: scale(1.06); }
-  #cpApply { position: fixed; inset: 0; z-index: 9990; background: rgba(30,10,60,.7); display: none;
-    align-items: center; justify-content: center; padding: 16px; }
+  #cpApplyBtn { position: fixed; right: 18px; bottom: 18px; z-index: 9000; border: 0; cursor: pointer; background: linear-gradient(135deg,#5b21b6,#7c3aed); color: #fff; font-weight: 700; font-size: 1rem; padding: 14px 22px; border-radius: 999px; box-shadow: 0 8px 20px rgba(76,29,149,.45); }
+  #cpApply { position: fixed; inset: 0; z-index: 99999; background: rgba(30,10,60,.7); display: none; align-items: center; justify-content: center; padding: 16px; }
   #cpApply.cpa-open { display: flex; }
-  .cpa-box { position: relative; background: #fff; color: #1f1147; width: 100%; max-width: 520px; max-height: 92vh;
-    overflow-y: auto; border-radius: 20px; padding: 26px 24px; box-shadow: 0 20px 50px rgba(0,0,0,.35); }
-  .cpa-close { position: absolute; top: 12px; right: 14px; border: 0; background: #ede9fe; color: #5b21b6;
-    width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 1rem; }
-  .cpa-box h2 { margin: 0 0 4px; color: #5b21b6; font-size: 1.4rem; padding-right: 34px; }
-  .cpa-sub { margin: 0 0 16px; color: #6b7280; font-size: .9rem; }
-  .cpa-box label { display: block; font-weight: 600; font-size: .9rem; margin-bottom: 12px; }
-  .cpa-box input[type=text], .cpa-box input[type=email], .cpa-box input[type=tel], .cpa-box input[type=url],
-  .cpa-box select, .cpa-box textarea { display: block; width: 100%; box-sizing: border-box; margin-top: 5px;
-    padding: 10px 12px; border: 2px solid #ddd6fe; border-radius: 10px; font: inherit; font-weight: 400; background: #fff; color: #1f1147; }
-  .cpa-box input:focus, .cpa-box select:focus, .cpa-box textarea:focus { outline: none; border-color: #7c3aed; }
-  .cpa-box .cpa-bad { border-color: #dc2626 !important; }
-  .cpa-box .cpa-good { border-color: #16a34a !important; }
-  .cpa-err { display: block; color: #dc2626; font-weight: 500; font-size: .8rem; min-height: 1em; margin-top: 3px; }
-  .cpa-check { display: flex !important; gap: 8px; align-items: flex-start; font-weight: 500 !important; }
-  .cpa-submit { width: 100%; border: 0; cursor: pointer; margin-top: 10px; padding: 13px; border-radius: 12px;
-    background: linear-gradient(135deg, #5b21b6, #7c3aed); color: #fff; font-weight: 700; font-size: 1rem; }
-  #cpaDone { text-align: center; padding: 10px 0; }
-  .cpa-tick { font-size: 3rem; }
+  .cpa-box { position: relative; background: #fff; color: #1f1147; width: 100%; max-width: 500px; max-height: 92vh; overflow-y: auto; border-radius: 20px; padding: 26px 24px; }
+  .cpa-close { position: absolute; top: 12px; right: 14px; border: 0; background: #ede9fe; color: #5b21b6; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; }
+  .cpa-box h2 { margin: 0 0 14px; color: #5b21b6; font-size: 1.4rem; }
+  .cpa-box label { display: block; font-weight: 600; font-size: .9rem; margin-bottom: 10px; }
+  .cpa-box input[type=text], .cpa-box input[type=email], .cpa-box input[type=tel], .cpa-box select { display: block; width: 100%; box-sizing: border-box; margin-top: 5px; padding: 10px 12px; border: 2px solid #ddd6fe; border-radius: 10px; font: inherit; background: #fff; color: #1f1147; }
+  .cpa-box .bad { border-color: #dc2626 !important; }
+  .cpa-err { display: block; color: #dc2626; font-size: .8rem; min-height: 1em; font-weight: 500; }
+  .cpa-submit { width: 100%; border: 0; cursor: pointer; margin-top: 8px; padding: 13px; border-radius: 12px; background: linear-gradient(135deg,#5b21b6,#7c3aed); color: #fff; font-weight: 700; font-size: 1rem; }
+</style>
+
+<script>
+  (function () {
+    var jobs = ["Web Developer","App Developer","Data Scientist","AI / ML Engineer","Embedded Systems Engineer","IoT Engineer","VLSI Design Engineer","Robotics Engineer","Cyber Security Analyst","UI/UX Designer","Advocate / Law"];
+    var quals = ["12th Pass","Diploma","B.Tech / B.E.","BCA / B.Sc.","LLB / Law","Master's Degree","Other"];
+    function opts(a) { return '<option value="">-- Select --</option>' + a.map(function (x) { return "<option>" + x + "</option>"; }).join(""); }
+
+    var m = document.createElement("div");
+    m.id = "cpApply";
+    m.innerHTML =
+      '<div class="cpa-box"><button type="button" class="cpa-close" id="cpaClose">✕</button>' +
+      '<div id="cpaWrap"><h2>Registration &amp; Job Application</h2><form id="cpaForm" novalidate>' +
+      '<label>Full name *<input type="text" id="cpaName"><span class="cpa-err"></span></label>' +
+      '<label>Email *<input type="email" id="cpaEmail"><span class="cpa-err"></span></label>' +
+      '<label>Mobile number *<input type="tel" id="cpaPhone" maxlength="10"><span class="cpa-err"></span></label>' +
+      '<label>Qualification *<select id="cpaQual">' + opts(quals) + '</select><span class="cpa-err"></span></label>' +
+      '<label>Career applying for *<select id="cpaJob">' + opts(jobs) + '</select><span class="cpa-err"></span></label>' +
+      '<label><input type="checkbox" id="cpaOk"> I confirm the details are correct *<span class="cpa-err"></span></label>' +
+      '<button type="submit" class="cpa-submit">Submit Application</button></form></div>' +
+      '<div id="cpaDone" style="display:none;text-align:center"><div style="font-size:3rem">✅</div><h2>Application Submitted!</h2><p id="cpaMsg"></p><button type="button" class="cpa-submit" id="cpaDoneBtn">Close</button></div></div>';
+    document.body.appendChild(m);
+
+    var $ = function (id) { return document.getElementById(id); };
+    var rules = {
+      cpaName: function (v) { return /^[A-Za-z][A-Za-z .'-]{2,}$/.test(v) ? "" : "Enter your name (letters only, min 3)."; },
+      cpaEmail: function (v) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v) ? "" : "Enter a valid email."; },
+      cpaPhone: function (v) { return /^[6-9]\d{9}$/.test(v) ? "" : "Enter a valid 10-digit mobile number."; },
+      cpaQual: function (v) { return v ? "" : "Select your qualification."; },
+      cpaJob: function (v) { return v ? "" : "Select a career."; }
+    };
+    function check(id) {
+      var el = $(id), msg = rules[id](el.value.trim());
+      el.parentNode.querySelector(".cpa-err").textContent = msg;
+      el.classList.toggle("bad", !!msg);
+      return !msg;
+    }
+    Object.keys(rules).forEach(function (id) { $(id).addEventListener("blur", function () { check(id); }); });
+    $("cpaPhone").addEventListener("input", function () { this.value = this.value.replace(/\D/g, ""); });
+
+    function open() { $("cpaWrap").style.display = "block"; $("cpaDone").style.display = "none"; m.classList.add("cpa-open"); }
+    function close() { m.classList.remove("cpa-open"); }
+    $("cpApplyBtn").addEventListener("click", open);
+    $("cpaClose").addEventListener("click", close);
+    $("cpaDoneBtn").addEventListener("click", close);
+    m.addEventListener("click", function (e) { if (e.target === m) close(); });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape") close(); });
+    document.addEventListener("click", function (e) {
+      var t = e.target.closest ? e.target.closest("[data-apply]") : null;
+      if (t) { e.preventDefault(); open(); }
+    });
+
+    $("cpaForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      var ok = true;
+      Object.keys(rules).forEach(function (id) { if (!check(id)) ok = false; });
+      var c = $("cpaOk");
+      c.parentNode.querySelector(".cpa-err").textContent = c.checked ? "" : "Please confirm.";
+      if (!c.checked) ok = false;
+      if (!ok) return;
+      var entry = { name: $("cpaName").value.trim(), email: $("cpaEmail").value.trim(), phone: $("cpaPhone").value, qualification: $("cpaQual").value, job: $("cpaJob").value, date: new Date().toLocaleString() };
+      try {
+        var list = JSON.parse(localStorage.getItem("cpApplications") || "[]");
+        list.push(entry);
+        localStorage.setItem("cpApplications", JSON.stringify(list));
+      } catch (x) {}
+      $("cpaMsg").textContent = "Thank you, " + entry.name + ". Your application for " + entry.job + " is recorded.";
+      $("cpaWrap").style.display = "none";
+      $("cpaDone").style.display = "block";
+      this.reset();
+    });
+  })();
+</script>
 </style>
 
 <script>
