@@ -190,6 +190,62 @@
   </div>
 
   <script src="script.js"></script>
+    <!-- ===== Apply box inside the roadmap popup ===== -->
+<style>
+  #cpApply { z-index: 99999 !important; }
+  #cpmApply { margin-top: 12px; text-align: center; background: linear-gradient(135deg, #ede9fe, #ddd6fe); border-radius: 12px; padding: 16px; }
+  #cpmApply h4 { margin: 0 0 6px; color: #4c1d95; }
+  #cpmApply p { margin: 0 0 12px; font-size: .92rem; color: #2e1065; }
+  #cpmApply button { border: 0; cursor: pointer; padding: 12px 28px; border-radius: 999px; background: #5b21b6; color: #fff; font-weight: 700; font-size: 1rem; }
+  #cpmApply button:hover { background: #4c1d95; }
+</style>
+
+<script>
+  (function () {
+    var modal = document.getElementById("modal");
+    if (!modal) return;
+
+    function addBox() {
+      var box = modal.querySelector(".modal-box");
+      if (!box) return;
+      var div = document.getElementById("cpmApply");
+      if (!div) {
+        div = document.createElement("div");
+        div.id = "cpmApply";
+        div.innerHTML = '<h4>Interested in this career?</h4>' +
+          '<p>Register and apply using the form.</p>' +
+          '<button type="button" id="cpmApplyBtn">📝 Apply / Register</button>';
+        div.querySelector("button").addEventListener("click", openWithCareer);
+      }
+      box.appendChild(div); // keeps it at the very bottom
+    }
+
+    function openWithCareer() {
+      var titleEl = modal.querySelector("h2");
+      var title = titleEl ? titleEl.textContent.toLowerCase() : "";
+      var open = document.getElementById("cpApplyBtn");
+      if (open) open.click();
+      setTimeout(function () {
+        var sel = document.getElementById("cpaJob");
+        if (!sel) return;
+        var words = title.replace(/[^a-z\/ ]/g, " ").split(/\s+/).filter(function (w) { return w.length > 2; });
+        for (var i = 0; i < sel.options.length; i++) {
+          var o = sel.options[i].text.toLowerCase();
+          if (!sel.options[i].value && o.indexOf("select") > -1) continue;
+          if (title.indexOf(o) > -1 || o.indexOf(title.trim()) > -1) { sel.selectedIndex = i; return; }
+        }
+        for (var j = 0; j < sel.options.length; j++) {
+          var t = sel.options[j].text.toLowerCase();
+          if (words.some(function (w) { return t.indexOf(w) > -1; })) { sel.selectedIndex = j; return; }
+        }
+      }, 120);
+    }
+
+    new MutationObserver(function () {
+      if (!modal.classList.contains("hidden")) setTimeout(addBox, 200);
+    }).observe(modal, { attributes: true, attributeFilter: ["class"] });
+  })();
+</script>
     <!-- ===== Centered registration call-to-action ===== -->
 <style>
   #cpReg { max-width: 760px; margin: 40px auto; padding: 32px 24px; text-align: center;
