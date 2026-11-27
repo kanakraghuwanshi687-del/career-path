@@ -364,6 +364,16 @@
     });
   })();
 </script>
+    <script>
+  document.addEventListener("click", function (e) {
+    var b = e.target.closest ? e.target.closest(".cpr-btn") : null;
+    if (b) {
+      e.preventDefault();
+      var f = document.getElementById("cpApplyBtn");
+      if (f) f.click();
+    }
+  });
+</script>
 </style>
 
 <script>
